@@ -1,0 +1,176 @@
+{
+  "terms": [
+    {
+      "name": "Intersectionality",
+      "definition": "A framework coined by Kimberle Crenshaw (1989) for understanding how overlapping social identities — such as race, class, gender, and sexuality — relate to systems and structures of oppression, domination, or discrimination. It argues that these identities cannot be examined separately but must be understood as interconnected.",
+      "tags": "Feminism"
+    },
+    {
+      "name": "Performativity",
+      "definition": "A concept developed by Judith Butler arguing that gender is not an innate identity but a repeated performance of acts, gestures, and behaviors that create the illusion of a stable gender identity. Gender is something we do, not something we are.",
+      "tags": "Feminism,Queer Theory"
+    },
+    {
+      "name": "Male Gaze",
+      "definition": "A concept from feminist film theory, coined by Laura Mulvey in her 1975 essay 'Visual Pleasure and Narrative Cinema,' describing how visual media is often structured from a masculine, heterosexual perspective, positioning the viewer as male and women as objects of visual pleasure.",
+      "tags": "Feminism,Film/Media Theory"
+    },
+    {
+      "name": "Patriarchy",
+      "definition": "A social system in which men hold primary power and predominate in roles of political leadership, moral authority, social privilege, and control over property. Feminist theory uses this concept to analyze systemic gender inequality.",
+      "tags": "Feminism"
+    },
+    {
+      "name": "Simone de Beauvoir",
+      "definition": "French existentialist philosopher and feminist whose 1949 book 'The Second Sex' argued that 'one is not born, but rather becomes, a woman,' laying the groundwork for second-wave feminism and the distinction between sex and gender.",
+      "tags": "Feminism"
+    },
+    {
+      "name": "Judith Butler",
+      "definition": "American philosopher whose work on gender performativity, particularly in 'Gender Trouble' (1990), challenged the idea of a fixed gender identity and influenced queer theory, feminist theory, and political philosophy.",
+      "tags": "Feminism,Queer Theory"
+    },
+    {
+      "name": "Standpoint Theory",
+      "definition": "A feminist theoretical perspective arguing that knowledge is socially situated, and that marginalized groups have a unique and epistemically privileged perspective on social relations because of their position within power structures.",
+      "tags": "Feminism"
+    },
+    {
+      "name": "bell hooks",
+      "definition": "American author, professor, and social activist whose work examined the intersections of race, capitalism, and gender. Her books 'Ain't I a Woman' (1981) and 'Feminist Theory: From Margin to Center' (1984) challenged mainstream feminism to address race and class.",
+      "tags": "Feminism"
+    },
+    {
+      "name": "Scopophilia",
+      "definition": "A psychoanalytic concept meaning the pleasure of looking, particularly at other people as objects. In film theory, Laura Mulvey used this concept to describe how cinema constructs a voyeuristic viewing position, linking visual pleasure to the control of the looked-at subject.",
+      "tags": "Film/Media Theory,Psychoanalysis"
+    },
+    {
+      "name": "Hegemony",
+      "definition": "A concept from Antonio Gramsci describing how a ruling class maintains power not through force alone but through cultural and ideological domination, making their worldview seem like common sense. In media studies, it explains how media reinforces dominant ideologies.",
+      "tags": "Film/Media Theory"
+    },
+    {
+      "name": "Representation",
+      "definition": "In media studies, the process by which media constructs and presents images, narratives, and meanings about social groups, events, and ideas. It asks who is represented, how, by whom, and with what consequences.",
+      "tags": "Film/Media Theory"
+    },
+    {
+      "name": "Laura Mulvey",
+      "definition": "British feminist film theorist whose 1975 essay 'Visual Pleasure and Narrative Cinema' introduced the concept of the male gaze, arguing that classical Hollywood cinema is structured around masculine visual pleasure and the objectification of women.",
+      "tags": "Feminism,Film/Media Theory"
+    },
+    {
+      "name": "Feminist Film Theory",
+      "definition": "A theoretical framework that analyzes how gender is represented in cinema, how film spectatorship is gendered, and how cinema reinforces or challenges patriarchal ideologies. Key figures include Laura Mulvey, bell hooks, and Teresa de Lauretis.",
+      "tags": "Feminism,Film/Media Theory"
+    },
+    {
+      "name": "Encoding/Decoding",
+      "definition": "A communication model by Stuart Hall (1973) arguing that media messages are 'encoded' with preferred meanings by producers and 'decoded' by audiences who may accept, negotiate, or oppose those meanings. It challenges the idea that audiences passively absorb media messages.",
+      "tags": "Film/Media Theory"
+    },
+    {
+      "name": "Mise-en-scene",
+      "definition": "A film studies term meaning 'placing on stage,' referring to everything within the frame of a film shot — including set design, lighting, costume, actor positioning, and composition. It is one of the key visual elements through which meaning is constructed in cinema.",
+      "tags": "Film/Media Theory"
+    },
+    {
+      "name": "Heteronormativity",
+      "definition": "The assumption that heterosexuality is the default, normal, and preferred sexual orientation, and that gender is binary (male/female). Queer theory critiques heteronormativity as a system that marginalizes non-heterosexual and non-cisgender identities.",
+      "tags": "Queer Theory"
+    },
+    {
+      "name": "Queer Theory",
+      "definition": "An interdisciplinary field that emerged in the early 1990s, challenging fixed categories of sexuality and gender. It draws on the work of Judith Butler, Michel Foucault, and Eve Kosofsky Sedgwick to question norms around identity, desire, and the body.",
+      "tags": "Queer Theory"
+    },
+    {
+      "name": "Camp",
+      "definition": "An aesthetic sensibility and cultural style characterized by exaggeration, artifice, and theatricality, often associated with queer culture. Susan Sontag's 1964 essay 'Notes on Camp' defined it as a love of the unnatural, of artifice and exaggeration.",
+      "tags": "Queer Theory,Film/Media Theory"
+    },
+    {
+      "name": "Eve Kosofsky Sedgwick",
+      "definition": "American scholar whose work, particularly 'Epistemology of the Closet' (1990), explored the homo/heterosexual binary as a central organizing principle of modern Western culture and argued that knowledge about sexuality is always unstable and contested.",
+      "tags": "Queer Theory"
+    },
+    {
+      "name": "Homonormativity",
+      "definition": "A concept coined by Lisa Duggan describing the assimilation of certain LGBTQ+ identities (typically white, cisgender, middle-class gay men and lesbians) into mainstream heteronormative institutions like marriage and military service, rather than challenging those institutions.",
+      "tags": "Queer Theory"
+    },
+    {
+      "name": "Cisnormativity",
+      "definition": "The assumption that all people are cisgender — that their gender identity matches the sex they were assigned at birth. It marginalizes transgender and non-binary identities by treating them as deviations from a supposed norm.",
+      "tags": "Queer Theory"
+    },
+    {
+      "name": "The Mirror Stage",
+      "definition": "A concept by Jacques Lacan describing the phase (around 6-18 months) when an infant first recognizes their reflection in a mirror, forming a sense of a unified self. This moment of identification is foundational to Lacan's theory of the Imaginary and the formation of the ego.",
+      "tags": "Psychoanalysis"
+    },
+    {
+      "name": "The Gaze",
+      "definition": "In psychoanalytic theory, particularly Lacan's work, the gaze is not just about looking but about the awareness of being looked at — the subject's sense that they are being observed, which shapes their identity and behavior. It differs from the male gaze in that it is about the subject's relationship to being seen.",
+      "tags": "Psychoanalysis,Film/Media Theory"
+    },
+    {
+      "name": "The Other",
+      "definition": "A concept from psychoanalysis and postcolonial theory describing how identity is constructed through difference — the self is defined against what it is not. The Other is the marginalized, excluded figure against which the dominant subject defines itself.",
+      "tags": "Psychoanalysis,Queer Theory"
+    },
+    {
+      "name": "Jacques Lacan",
+      "definition": "French psychoanalyst whose reinterpretation of Freud through structuralist linguistics produced concepts like the mirror stage, the Real/Symbolic/Imaginary, and the gaze. His work profoundly influenced film theory, literary criticism, and gender studies.",
+      "tags": "Psychoanalysis,Film/Media Theory"
+    },
+    {
+      "name": "Abjection",
+      "definition": "A concept from Julia Kristeva describing the reaction of horror and disgust when confronted with something that threatens the boundaries of the self — such as the corpse, bodily waste, or the maternal body. The abject is what disturbs identity, system, and order.",
+      "tags": "Psychoanalysis,Feminism"
+    },
+    {
+      "name": "The Uncanny",
+      "definition": "A concept from Freud describing the feeling of unease when something familiar becomes strange or alien. In film and media studies, the uncanny is used to analyze how horror and science fiction exploit the blurring of boundaries between the known and unknown.",
+      "tags": "Psychoanalysis,Film/Media Theory"
+    },
+    {
+      "name": "Phallogocentrism",
+      "definition": "A term combining phallocentrism and logocentrism, coined by Jacques Derrida and adopted by feminist and psychoanalytic theory. It describes a system of thought that privileges the phallus (masculine power) and logos (rational speech) as the centers of meaning and authority.",
+      "tags": "Psychoanalysis,Feminism"
+    }
+  ],
+  "connections": [
+    {"term_a": "Male Gaze", "term_b": "Scopophilia", "explanation": "Both deal with visual pleasure and the act of looking as a source of power. The male gaze relies on scopophilia to construct the viewer's pleasure."},
+    {"term_a": "Male Gaze", "term_b": "Laura Mulvey", "explanation": "Mulvey coined the concept of the male gaze in her 1975 essay 'Visual Pleasure and Narrative Cinema.'"},
+    {"term_a": "Male Gaze", "term_b": "Feminist Film Theory", "explanation": "The male gaze is a foundational concept in feminist film theory, central to analyzing gender in cinema."},
+    {"term_a": "Performativity", "term_b": "Judith Butler", "explanation": "Butler developed the theory of gender performativity in 'Gender Trouble' (1990)."},
+    {"term_a": "Performativity", "term_b": "Heteronormativity", "explanation": "Performativity reveals how heteronormative gender roles are maintained through repeated performances, not biology."},
+    {"term_a": "The Mirror Stage", "term_b": "The Gaze", "explanation": "Both are Lacanian concepts dealing with the subject's formation through visual identification and the awareness of being seen."},
+    {"term_a": "The Mirror Stage", "term_b": "Jacques Lacan", "explanation": "Lacan introduced the mirror stage as a foundational concept in his psychoanalytic theory."},
+    {"term_a": "Intersectionality", "term_b": "bell hooks", "explanation": "hooks' work on the intersections of race, class, and gender parallels and extends Crenshaw's framework."},
+    {"term_a": "Intersectionality", "term_b": "Patriarchy", "explanation": "Intersectionality analyzes how patriarchy interacts with other systems of oppression like racism and classism."},
+    {"term_a": "Queer Theory", "term_b": "Judith Butler", "explanation": "Butler's work on performativity is a foundational text for queer theory."},
+    {"term_a": "Queer Theory", "term_b": "Eve Kosofsky Sedgwick", "explanation": "Sedgwick's 'Epistemology of the Closet' is a foundational text in queer theory."},
+    {"term_a": "Abjection", "term_b": "Jacques Lacan", "explanation": "Kristeva's concept of abjection builds on Lacan's theories of the subject and the boundary between self and other."},
+    {"term_a": "Abjection", "term_b": "The Other", "explanation": "Abjection is closely related to the process of othering — defining the self by expelling what is threatening or foreign."},
+    {"term_a": "Heteronormativity", "term_b": "Homonormativity", "explanation": "Homonormativity describes the assimilation of certain queer identities into heteronormative structures, rather than challenging them."},
+    {"term_a": "Heteronormativity", "term_b": "Cisnormativity", "explanation": "Both are normative systems that enforce binary assumptions — heteronormativity about sexuality, cisnormativity about gender identity."},
+    {"term_a": "The Gaze", "term_b": "The Uncanny", "explanation": "Both involve a disruption of the subject's sense of self through visual experience — the gaze through being watched, the uncanny through the familiar becoming strange."},
+    {"term_a": "Encoding/Decoding", "term_b": "Hegemony", "explanation": "Stuart Hall's model draws on Gramsci's hegemony to explain how media encodes dominant ideologies that audiences may resist."},
+    {"term_a": "Laura Mulvey", "term_b": "Feminist Film Theory", "explanation": "Mulvey's work is considered the founding text of feminist film theory."},
+    {"term_a": "Simone de Beauvoir", "term_b": "Performativity", "explanation": "Beauvoir's 'one is not born, but rather becomes, a woman' prefigures Butler's theory of performativity by four decades."},
+    {"term_a": "The Other", "term_b": "Simone de Beauvoir", "explanation": "Beauvoir analyzed woman as 'the Other' in relation to man as the default subject in 'The Second Sex.'"},
+    {"term_a": "Camp", "term_b": "Queer Theory", "explanation": "Camp is a key aesthetic in queer culture that queer theory examines for its subversion of normative gender and sexuality."},
+    {"term_a": "Jacques Lacan", "term_b": "The Gaze", "explanation": "Lacan theorized the gaze as a fundamental structure of the subject's relationship to the visual field."},
+    {"term_a": "Phallogocentrism", "term_b": "Patriarchy", "explanation": "Phallogocentrism describes the ideological foundation of patriarchy — the linking of masculine power with rational authority."},
+    {"term_a": "Phallogocentrism", "term_b": "Jacques Lacan", "explanation": "The concept builds on Lacan's theory of the phallus as the master signifier in the Symbolic order."},
+    {"term_a": "Representation", "term_b": "Encoding/Decoding", "explanation": "Representation is how media constructs meaning; encoding/decoding is the process by which that meaning is produced and received."},
+    {"term_a": "Mise-en-scene", "term_b": "Laura Mulvey", "explanation": "Mulvey's analysis of visual pleasure in cinema relies heavily on mise-en-scene — how the visual composition of the frame constructs the gaze."},
+    {"term_a": "bell hooks", "term_b": "Intersectionality", "explanation": "hooks' work on the margins of feminism embodies the intersectional approach Crenshaw later named."},
+    {"term_a": "Simone de Beauvoir", "term_b": "Judith Butler", "explanation": "Butler's performativity theory builds directly on Beauvoir's existentialist claim that gender is constructed, not innate."},
+    {"term_a": "Homonormativity", "term_b": "Queer Theory", "explanation": "Queer theory critiques homonormativity as a depoliticizing force that assimilates queer identities into mainstream structures."},
+    {"term_a": "Standpoint Theory", "term_b": "Intersectionality", "explanation": "Both argue that knowledge is shaped by social position, and that marginalized perspectives offer unique epistemic insights."}
+  ]
+}
