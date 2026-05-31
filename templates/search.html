@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Search: {{ query }}{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('home') }}" class="back-link">&larr; Back to home</a>
+
+    <h2 class="section-title">Results for "{{ query }}"</h2>
+
+    {% if results %}
+        <ul class="term-list">
+            {% for r in results %}
+            <li>
+                <div>
+                    <a href="{{ url_for('term_view', term_id=r.id) }}">{{ r.name }}</a>
+                    <div class="term-preview">{{ r.definition[:120] }}{% if r.definition|length > 120 %}...{% endif %}</div>
+                    <div class="term-tags">{{ r.tags or "No tags" }}</div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No terms found for "{{ query }}". Try a different search or <a href="{{ url_for('browse') }}">browse by category</a>.</p>
+    {% endif %}
+{% endblock %}

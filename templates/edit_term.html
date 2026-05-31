@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Edit: {{ term.name }}{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('term_view', term_id=term.id) }}" class="back-link">&larr; Back to term</a>
+
+    <h2 class="section-title">Edit: {{ term.name }}</h2>
+
+    <form method="post" action="{{ url_for('edit_term', term_id=term.id) }}">
+        <label for="name">Term name:</label>
+        <input type="text" name="name" id="name" value="{{ term.name }}" required>
+
+        <label for="definition">Definition:</label>
+        <textarea name="definition" id="definition" required>{{ term.definition }}</textarea>
+
+        <label for="tags">Tags (comma-separated):</label>
+        <input type="text" name="tags" id="tags" value="{{ term.tags or '' }}">
+
+        <button type="submit" class="btn primary">Save Changes</button>
+    </form>
+{% endblock %}

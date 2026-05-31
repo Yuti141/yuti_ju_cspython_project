@@ -602,18 +602,45 @@ def get_all_tags():
     return result
 
 
-def get_term_of_day():
+def get_term_of_day(force_new=False):
     """
-    Selects a random term for "Term of the Day", excluding recently shown terms
-    and prioritizing terms not in the user's study list.
+    Returns the term of the day. Same term all day unless force_new=True.
+    Picks a new term each calendar day, prioritizing unstudied and not recently shown terms.
+
+    Args:
+        force_new: If True, picks a new term regardless of the date.
 
     Returns:
-        Term dict with name and definition, or None if no terms exist.
+        Term dict with id, name, and definition, or None if no terms exist.
     """
     conn = get_connection()
     cursor = conn.cursor()
+    today = datetime.now().strftime("%Y-%m-%d")
 
-    # Get recently shown term IDs (last 5)
+    # Create a metadata table to track the current term of the day
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS term_of_day_meta (
+            id INTEGER PRIMARY KEY CHECK (id = 1),
+            term_id INTEGER NOT NULL,
+            picked_date TEXT NOT NULL
+        )
+    """)
+
+    if not force_new:
+        # Check if we already have a term for today
+        cursor.execute("SELECT term_id, picked_date FROM term_of_day_meta WHERE id = 1")
+        row = cursor.fetchone()
+        if row and row["picked_date"] == today:
+            cursor.execute("SELECT id, name, definition FROM terms WHERE id = ?", (row["term_id"],))
+            term = cursor.fetchone()
+            if term:
+                conn.close()
+                return {"id": term["id"], "name": term["name"], "definition": term["definition"]}
+
+    # Need to pick a new term
+    import random
+
+    # Get recently shown term IDs (last 5 days)
     five_days_ago = (datetime.now() - timedelta(days=5)).strftime("%Y-%m-%d")
     cursor.execute("SELECT DISTINCT term_id FROM recently_shown WHERE shown_date >= ?", (five_days_ago,))
     recent_ids = [row["term_id"] for row in cursor.fetchall()]
@@ -630,8 +657,7 @@ def get_term_of_day():
         conn.close()
         return None
 
-    # Prioritize: unstudied + not recently shown > unstudied + recently shown > studied + not recently shown > rest
-    import random
+    # Prioritize: unstudied + not recently shown > unstudied > rest
     candidates = []
     fallback = []
 
@@ -648,8 +674,14 @@ def get_term_of_day():
 
     chosen = random.choice(candidates) if candidates else random.choice(fallback)
 
-    # Record that this term was shown today
-    today = datetime.now().strftime("%Y-%m-%d")
+    # Store the pick for today
+    cursor.execute("DELETE FROM term_of_day_meta WHERE id = 1")
+    cursor.execute(
+        "INSERT INTO term_of_day_meta (id, term_id, picked_date) VALUES (1, ?, ?)",
+        (chosen["id"], today)
+    )
+
+    # Also record in recently_shown
     cursor.execute("INSERT INTO recently_shown (term_id, shown_date) VALUES (?, ?)", (chosen["id"], today))
     conn.commit()
     conn.close()

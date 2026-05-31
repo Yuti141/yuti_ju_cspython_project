@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Browse Categories{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('home') }}" class="back-link">&larr; Back to home</a>
+
+    <h2 class="section-title">Browse by Category</h2>
+
+    <div class="category-grid">
+        {% for t in tags %}
+        <a href="{{ url_for('browse_tag', tag=t.tag) }}" class="category-card">
+            <h3>{{ t.tag }}</h3>
+            <div class="count">{{ t.count }} terms</div>
+        </a>
+        {% endfor %}
+    </div>
+{% endblock %}

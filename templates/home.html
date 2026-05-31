@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="search-box">
+        <form action="{{ url_for('search') }}" method="get" class="search-form">
+            <input type="text" name="q" placeholder="Search for a theory, concept, or theorist..." autofocus>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    {% if term_of_day %}
+    <div class="term-of-day">
+        <h3>Term of the Day</h3>
+        <div class="term-name">
+            <a href="{{ url_for('term_view', term_id=term_of_day.id) }}">{{ term_of_day.name }}</a>
+        </div>
+        <div class="term-preview">
+            {{ term_of_day.definition[:200] }}{% if term_of_day.definition|length > 200 %}...{% endif %}
+        </div>
+        <form action="{{ url_for('new_term_of_day') }}" method="post" style="margin-top: 12px;">
+            <button type="submit" class="btn small">New Term</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="menu-grid">
+        <a href="{{ url_for('browse') }}" class="menu-card">
+            <h3>Browse by Category</h3>
+            <p>Explore terms by topic area</p>
+        </a>
+        <a href="{{ url_for('study_list') }}" class="menu-card">
+            <h3>My Study List</h3>
+            <p>Track your learning progress</p>
+        </a>
+        <a href="{{ url_for('concept_map') }}" class="menu-card">
+            <h3>Concept Map</h3>
+            <p>See how theories connect</p>
+        </a>
+        <a href="{{ url_for('manage_connections') }}" class="menu-card">
+            <h3>Manage Connections</h3>
+            <p>Link terms and explain relationships</p>
+        </a>
+        <a href="{{ url_for('add_term') }}" class="menu-card">
+            <h3>Add a New Term</h3>
+            <p>Expand the glossary</p>
+        </a>
+    </div>
+{% endblock %}

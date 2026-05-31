@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Manage Connections{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('home') }}" class="back-link">&larr; Back to home</a>
+
+    <h2 class="section-title">Manage Connections</h2>
+
+    <form method="post" action="{{ url_for('manage_connections') }}">
+        <label for="term_a_id">First term:</label>
+        <select name="term_a_id" id="term_a_id" required>
+            <option value="">Select a term...</option>
+            {% for t in all_terms %}
+            <option value="{{ t.id }}">{{ t.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="term_b_id">Second term:</label>
+        <select name="term_b_id" id="term_b_id" required>
+            <option value="">Select a term...</option>
+            {% for t in all_terms %}
+            <option value="{{ t.id }}">{{ t.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="explanation">Explain the connection:</label>
+        <textarea name="explanation" id="explanation" placeholder="How are these two terms related?" required></textarea>
+
+        <button type="submit" class="btn primary">Create Connection</button>
+    </form>
+{% endblock %}

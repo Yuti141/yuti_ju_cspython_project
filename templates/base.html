@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheoryLens — {% block title %}Gender & Media Theory Guide{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>THEORYLENS</h1>
+            <p>Your Gender & Media Theory Guide</p>
+        </div>
+    </header>
+
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('browse') }}">Browse</a>
+        <a href="{{ url_for('study_list') }}">Study List</a>
+        <a href="{{ url_for('concept_map') }}">Concept Map</a>
+        <a href="{{ url_for('manage_connections') }}">Connections</a>
+        <a href="{{ url_for('add_term') }}">Add Term</a>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <div class="container">
+            TheoryLens — A study tool for gender and media theory
+        </div>
+    </footer>
+</body>
+</html>

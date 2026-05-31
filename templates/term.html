@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}{{ term.name }}{% endblock %}
+
+{% block content %}
+    <a href="javascript:history.back()" class="back-link">&larr; Back</a>
+
+    <div class="term-detail">
+        <h2>{{ term.name }}</h2>
+        <div class="tags">Tags: {{ term.tags or "No tags" }}</div>
+
+        <div class="definition">{{ term.definition }}</div>
+
+        <div class="connections-section">
+            <h3>Connections</h3>
+            {% if term.connections %}
+                {% for conn in term.connections %}
+                <div class="connection-item">
+                    <span class="conn-name">
+                        <a href="{{ url_for('term_view', term_id=conn.term_id) }}">{{ conn.term_name }}</a>
+                    </span>
+                    <div class="conn-explanation">"{{ conn.explanation }}"</div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="no-connections">No connections yet. <a href="{{ url_for('manage_connections') }}">Add one</a>.</p>
+            {% endif %}
+        </div>
+
+        <div class="readings-section" style="margin-top: 20px;">
+            <h3>Reading Recommendations</h3>
+            {% if readings %}
+                {% for r in readings %}
+                <div class="reading-item">
+                    <span class="reading-title">"{{ r.title }}"</span> — {{ r.authors }} ({{ r.year }})
+                    {% if r.relevance %}
+                        <div class="reading-relevance">{{ r.relevance }}</div>
+                    {% endif %}
+                    {% if r.doi %}
+                        <div class="reading-meta">DOI: <a href="https://doi.org/{{ r.doi }}" target="_blank">{{ r.doi }}</a></div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="no-connections">Could not fetch reading recommendations.</p>
+            {% endif %}
+        </div>
+
+        <div style="margin-top: 20px;">
+            <h3>Study Status</h3>
+            {% if term.study_status == "want_to_learn" %}
+                <span class="status-badge want">Want to Learn</span>
+            {% elif term.study_status == "in_progress" %}
+                <span class="status-badge progress">In Progress</span>
+            {% elif term.study_status == "learned" %}
+                <span class="status-badge learned">Learned</span>
+            {% else %}
+                <span class="status-badge none">Not in study list</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="actions-bar">
+        {% if not term.study_status %}
+            <form action="{{ url_for('add_to_study_list', term_id=term.id) }}" method="post" style="display:inline;">
+                <select name="status">
+                    <option value="want_to_learn">Want to Learn</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="learned">Learned</option>
+                </select>
+                <button type="submit" class="btn primary">Add to Study List</button>
+            </form>
+        {% else %}
+            <form action="{{ url_for('update_study_status', term_id=term.id) }}" method="post" style="display:inline;">
+                <select name="status">
+                    <option value="want_to_learn" {% if term.study_status == "want_to_learn" %}selected{% endif %}>Want to Learn</option>
+                    <option value="in_progress" {% if term.study_status == "in_progress" %}selected{% endif %}>In Progress</option>
+                    <option value="learned" {% if term.study_status == "learned" %}selected{% endif %}>Learned</option>
+                </select>
+                <button type="submit" class="btn">Update Status</button>
+            </form>
+        {% endif %}
+
+        {% if term.is_user_added %}
+            <a href="{{ url_for('edit_term', term_id=term.id) }}" class="btn">Edit</a>
+            <form action="{{ url_for('delete_term', term_id=term.id) }}" method="post" style="display:inline;" onsubmit="return confirm('Delete this term?');">
+                <button type="submit" class="btn danger">Delete</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

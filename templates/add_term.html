@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Add a New Term{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('home') }}" class="back-link">&larr; Back to home</a>
+
+    <h2 class="section-title">Add a New Term</h2>
+
+    <form method="post" action="{{ url_for('add_term') }}">
+        <label for="name">Term name:</label>
+        <input type="text" name="name" id="name" placeholder="e.g., Queer Temporality" required>
+
+        <label for="definition">Definition:</label>
+        <textarea name="definition" id="definition" placeholder="Write a clear, concise definition..." required></textarea>
+
+        <label for="tags">Tags (comma-separated):</label>
+        <input type="text" name="tags" id="tags" placeholder="e.g., Queer Theory, Postmodernism">
+
+        <button type="submit" class="btn primary">Add Term</button>
+    </form>
+{% endblock %}

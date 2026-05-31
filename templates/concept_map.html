@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Concept Map{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('home') }}" class="back-link">&larr; Back to home</a>
+
+    <h2 class="section-title">Concept Map</h2>
+
+    <form method="get" action="{{ url_for('concept_map') }}" style="margin-bottom: 20px;">
+        <label for="term_id">Select a term to view its connections:</label>
+        <select name="term_id" id="term_id" onchange="this.form.submit()">
+            <option value="">Choose a term...</option>
+            {% for t in all_terms %}
+            <option value="{{ t.id }}" {% if selected_term and selected_term == t.id|string %}selected{% endif %}>
+                {{ t.name }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn" style="margin-left: 10px;">View Connections</button>
+    </form>
+
+    {% if connections is not none %}
+    <div class="map-display">
+        <div class="term-heading">{{ term_name }}</div>
+        {% if connections %}
+            {% for conn in connections %}
+            <div class="connection-item">
+                <span class="conn-name">
+                    <a href="{{ url_for('term_view', term_id=conn.term_id) }}">{{ conn.term_name }}</a>
+                </span>
+                <div class="conn-explanation">"{{ conn.explanation }}"</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-connections">No connections yet. <a href="{{ url_for('manage_connections') }}">Add one</a>.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+{% endblock %}

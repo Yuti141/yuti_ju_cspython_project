@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ tag }}{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('browse') }}" class="back-link">&larr; Back to categories</a>
+
+    <h2 class="section-title">{{ tag }} ({{ terms|length }} terms)</h2>
+
+    <ul class="term-list">
+        {% for t in terms %}
+        <li>
+            <div>
+                <a href="{{ url_for('term_view', term_id=t.id) }}">{{ t.name }}</a>
+                <div class="term-preview">{{ t.definition[:120] }}{% if t.definition|length > 120 %}...{% endif %}</div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

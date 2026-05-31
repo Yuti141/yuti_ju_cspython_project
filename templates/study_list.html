@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}My Study List{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('home') }}" class="back-link">&larr; Back to home</a>
+
+    <h2 class="section-title">My Study List</h2>
+
+    {% set total = study_list.want_to_learn|length + study_list.in_progress|length + study_list.learned|length %}
+
+    {% if total == 0 %}
+        <p>Your study list is empty. <a href="{{ url_for('home') }}">Search for terms</a> and add them to start studying!</p>
+    {% else %}
+        <div class="study-group">
+            <h3><span class="status-badge want">Want to Learn</span> ({{ study_list.want_to_learn|length }})</h3>
+            {% if study_list.want_to_learn %}
+                <ul class="term-list">
+                    {% for t in study_list.want_to_learn %}
+                    <li>
+                        <div>
+                            <a href="{{ url_for('term_view', term_id=t.term_id) }}">{{ t.name }}</a>
+                            <div class="term-tags">{{ t.tags or "No tags" }}</div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-connections">No terms here yet.</p>
+            {% endif %}
+        </div>
+
+        <div class="study-group">
+            <h3><span class="status-badge progress">In Progress</span> ({{ study_list.in_progress|length }})</h3>
+            {% if study_list.in_progress %}
+                <ul class="term-list">
+                    {% for t in study_list.in_progress %}
+                    <li>
+                        <div>
+                            <a href="{{ url_for('term_view', term_id=t.term_id) }}">{{ t.name }}</a>
+                            <div class="term-tags">{{ t.tags or "No tags" }}</div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-connections">No terms here yet.</p>
+            {% endif %}
+        </div>
+
+        <div class="study-group">
+            <h3><span class="status-badge learned">Learned</span> ({{ study_list.learned|length }})</h3>
+            {% if study_list.learned %}
+                <ul class="term-list">
+                    {% for t in study_list.learned %}
+                    <li>
+                        <div>
+                            <a href="{{ url_for('term_view', term_id=t.term_id) }}">{{ t.name }}</a>
+                            <div class="term-tags">{{ t.tags or "No tags" }}</div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-connections">No terms here yet.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}
