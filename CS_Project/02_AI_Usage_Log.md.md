@@ -47,3 +47,68 @@ AI then drafted the complete PRD v2 with all 8 required sections: project identi
 
 ### My Next Step
 Start building the project. Begin with `database.py` — set up the SQLite schema, write the seed data JSON file, and implement the CRUD functions. Then move to `app.py` for the UI and search logic.
+
+---
+
+## Entry 2
+
+### Date
+2026-05-26
+
+### AI Tool Used
+Claude Code (Claude Sonnet)
+
+### What I Asked AI
+I asked AI to help me run the TheoryLens project as a localhost web app and fix several issues with the website: (1) the reading recommendations were showing "Unknown" for authors, (2) the "Term of the Day" was changing every time I refreshed the home page instead of staying consistent per day, (3) the search button wasn't visually aligned with the search bar, (4) the browse page for tags containing slashes (like "Film/Media Theory") was returning a 404 error, and (5) the "why read" explanations for reading recommendations were too generic — every article about the same term got the same one-word label.
+
+### Why I Asked
+The Flask web app was already built but had usability bugs. The author parsing issue made reading recommendations less useful. The term of the day refreshing on every visit defeated its purpose — it should feel like a daily feature, not random. The search bar misalignment was a visual polish issue. The slash-in-tag URL was a routing bug. And the one-word "why read" labels (like just "Context") weren't helpful — I wanted explanations that reflected each individual article's specific angle, not just the general topic.
+
+### What AI Gave Me
+AI made changes across four files:
+
+**`app.py` — Reading recommendations overhaul:**
+- Fixed author parsing from the Crossref API by filtering out entries without a `family` name field, so authors display properly instead of "Unknown"
+- Built a `_TITLE_ANGLES` dictionary (~100 angle keywords mapped to explanation templates) that analyzes article titles to generate specific "why read" explanations
+- The matching logic strips the term's own words from the title first, then matches against angle keywords like "contesting", "merchant", "state", "slippages", etc., so each article gets a unique explanation based on its actual content (e.g., "Thinking with Patriarchy" → "Read to explore how to apply patriarchy as a thinking tool", while "Merchant Patriarchy and the State" → "Read to explore how patriarchy intersects with state power and governance")
+
+**`database.py` — Term of the Day persistence:**
+- Changed `get_term_of_day()` to use a `term_of_day_meta` SQLite table that stores the picked term ID and the date it was selected
+- On each call, it checks if today's date matches the stored date — if so, returns the same term; if not, picks a new one
+- Added a `force_new` parameter for manual refresh via the "New Term" button
+
+**`web_app.py` — New route and browse fix:**
+- Added `/new-term-of-day` POST route to handle the manual refresh button
+- Changed `/browse/<tag>` to `/browse/<path:tag>` so tags with slashes (like "Film/Media Theory") work correctly
+
+**`templates/home.html` — UI updates:**
+- Added a "New Term" button under the term of the day card
+- Changed the search form to use a CSS class (`search-form`) instead of inline styles
+
+**`templates/term.html` — Reading display:**
+- Added a `reading-relevance` div under each reading that shows the article-specific "why read" explanation
+
+**`static/style.css` — Styling fixes:**
+- Fixed search bar alignment by using flexbox on the form with `align-items: stretch` and `flex: 1` on the input
+- Added `.reading-relevance` style for the new explanation text
+- Added `.btn.small` style for the "New Term" button
+
+### What I Used
+- All of the author parsing fix — the `if a.get("family")` filter solved the "Unknown" author problem
+- The full `_TITLE_ANGLES` dictionary approach for generating article-specific explanations
+- The date-based term of the day logic with the `term_of_day_meta` table
+- The `<path:tag>` Flask route converter for slash-containing tags
+- The flexbox-based search bar alignment fix
+
+### What I Changed or Rejected
+- I initially had one-word relevance labels (like "Context", "Power", "Media") — I asked AI to change these to full sentences starting with "Read to..." so they're actually understandable to users
+- The first version of the relevance system matched keywords against the full title, which gave the same explanation for every article about the same term. I asked AI to strip the term's own words from the title first, so the matching focuses on what makes each article different
+- I didn't reject any of the technical approaches — the title-angle keyword matching, date-based persistence, and path converter were all the right solutions
+
+### What I Still Do Not Fully Understand
+- How Flask's `<path:tag>` converter differs from the default `<tag>` converter internally — I know it allows slashes but don't understand the routing mechanism
+- How the `_TITLE_ANGLES` keyword matching priority works when multiple angles could match (it sorts by length, so longer/more specific keywords match first)
+- How the `term_of_day_meta` table interacts with the existing `recently_shown` table — both track what was shown, but for different purposes
+
+### My Next Step
+Continue improving the web app. Potential next features: better search results display, user authentication, or improving the concept map visualization.
