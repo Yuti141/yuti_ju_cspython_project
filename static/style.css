@@ -89,6 +89,7 @@ nav a:hover {
     width: 100%;
     max-width: 500px;
     align-items: stretch;
+    line-height: 1;
 }
 
 .search-box input[type="text"] {
@@ -101,6 +102,9 @@ nav a:hover {
     border-radius: 4px 0 0 4px;
     font-family: 'Georgia', serif;
     outline: none;
+    box-sizing: border-box;
+    line-height: 1;
+    margin: 0;
 }
 
 .search-box input[type="text"]:focus {
@@ -117,6 +121,9 @@ nav a:hover {
     font-family: 'Georgia', serif;
     font-size: 1em;
     white-space: nowrap;
+    box-sizing: border-box;
+    line-height: 1;
+    margin: 0;
 }
 
 .search-box button:hover {
