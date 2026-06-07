@@ -112,3 +112,67 @@ AI made changes across four files:
 
 ### My Next Step
 Continue improving the web app. Potential next features: better search results display, user authentication, or improving the concept map visualization.
+
+---
+
+## Entry 3
+
+### Date
+2026-06-07
+
+### AI Tool Used
+Claude Code (Claude Sonnet)
+
+### What I Asked AI
+I asked AI to help me implement the full V2 plan based on my teacher's feedback. The feedback was: make web_app.py the clear entry point, split the large app and database files into smaller modules, add automated tests for search and study list behavior, and deploy the Flask app. We used the /grill-me skill again to pressure-test the plan, then AI built everything.
+
+### Why I Asked
+My teacher reviewed the project and said the codebase was too monolithic — `database.py` was ~694 lines and `app.py` had both CLI and web logic mixed together. He wanted a clear web entry point, modular code, tests that prove search and study list work correctly, and a live deployed URL. I needed help restructuring the entire project without breaking existing functionality.
+
+### What AI Gave Me
+
+**Planning phase (grill-me skill):**
+- AI interviewed me through ~8 design decisions: kill the CLI entirely (option 1), extract readings into `services/readings.py` (dedicated module), split database.py into a `db/` package by entity (core, terms, study_list, connections, tags, term_of_day), use in-memory SQLite with real seed data for tests, deploy to Render, and use `wsgi.py` as the production entry point.
+
+**Implementation phase:**
+
+- **`services/readings.py`** — Extracted `fetch_readings()`, `_TITLE_ANGLES` dictionary, and `_get_relevance_keyword()` from the old `app.py`
+- **`db/core.py`** — `get_connection()` (now accepts optional db path for tests), `init_database()`, `_load_seed_data()`
+- **`db/terms.py`** — `search_terms`, `view_term`, `add_term`, `edit_term`, `delete_term`
+- **`db/study_list.py`** — `add_to_study_list`, `update_study_status`, `get_study_list`
+- **`db/connections.py`** — `add_connection`, `get_connections`
+- **`db/tags.py`** — `get_all_terms`, `get_terms_by_tag`, `get_all_tags`
+- **`db/term_of_day.py`** — `get_term_of_day`
+- **`wsgi.py`** — Production entry point for Render (imports app, calls `init_database()`, exposes `app_flask` for gunicorn)
+- **`requirements.txt`** — Flask, gunicorn, pytest
+- **`tests/test_search.py`** — 9 tests: exact match, partial match, fuzzy match, definition search, missing term returns empty, empty query raises error, case insensitivity, single-term DB edge case, no-match edge case
+- **`tests/test_study_list.py`** — 10 tests: add saves correctly, multiple statuses, duplicate raises error, invalid status raises error, nonexistent term raises error, update status works, update nonexistent raises error, update invalid status raises error, empty by default, add-then-update workflow
+- **`web_app.py`** — Refactored imports to use `db/` submodules directly; added explicit `endpoint=` parameters on renamed route functions so templates' `url_for()` calls still work
+- **`render.yaml`** — Render deployment config with gunicorn bind to `$PORT`
+- **`README.md`** — Added run, test, and deploy instructions plus the live demo link
+- **Deleted** `app.py` and `database.py`
+
+**Deployment fixes:**
+- First deploy failed because gunicorn wasn't binding to Render's `PORT` env var — fixed with `--bind 0.0.0.0:$PORT`
+- Second deploy showed "Internal Server Error" because templates called `url_for('add_term')` but the route function was renamed to `add_term_route` — fixed by adding explicit `endpoint="add_term"` (and same for edit, delete, add_to_study_list, update_study_status)
+
+### What I Used
+- All decisions from the grill-me session: kill CLI, db/ package, services/ module, in-memory tests with real seed data, Render deployment
+- The full test suite as written — 19 tests covering all the behaviors my teacher asked for
+- The `endpoint=` fix for template compatibility
+- The `--bind 0.0.0.0:$PORT` gunicorn fix for Render
+
+### What I Changed or Rejected
+- I kept the Flask web UI as the sole interface (no CLI preservation) — this was the recommended option and matched teacher feedback
+- I chose the `db/` package split by entity rather than by operation type or minimal split — this made the code organization clearest
+- I chose hybrid test data strategy: load real `seed_data.json` for integration tests, use minimal fake data for edge-case tests
+- I didn't add a `.gitignore` for `__pycache__/` or `.db` files — should probably do that later
+
+### What I Still Do Not Fully Understand
+- How `file::memory:?cache=shared` works in SQLite — why it creates disk files sometimes but is still "in-memory"
+- How gunicorn's worker model works — if multiple workers each call `init_database()`, do they conflict?
+- How Render's ephemeral filesystem affects SQLite in the long run — the DB resets on every deploy, which is fine for a demo but not production
+- How Flask's `endpoint=` parameter interacts with the auto-generated endpoint names — I know it overrides them but don't understand the routing table internals
+
+### My Next Step
+Submit the project. Everything is built, tested, deployed, and documented.
