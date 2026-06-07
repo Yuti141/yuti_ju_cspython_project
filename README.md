@@ -24,6 +24,10 @@ For verbose output:
 python -m pytest -v
 ```
 
+## Live Demo
+
+Deployed on Render: **https://theorylens.onrender.com**
+
 ## Deploy
 
 This app is configured for Render using `wsgi.py` and Gunicorn.
