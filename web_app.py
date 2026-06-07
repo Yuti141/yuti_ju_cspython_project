@@ -1,6 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-import database
-import app as core
+from db.core import init_database
+from db.terms import search_terms, view_term, add_term, edit_term, delete_term
+from db.study_list import add_to_study_list, update_study_status, get_study_list
+from db.connections import add_connection
+from db.tags import get_all_tags, get_terms_by_tag
+from db.term_of_day import get_term_of_day
+from services.readings import fetch_readings
 
 app_flask = Flask(__name__)
 app_flask.secret_key = "theorylens_secret_key"
@@ -8,14 +13,14 @@ app_flask.secret_key = "theorylens_secret_key"
 
 @app_flask.route("/")
 def home():
-    term_of_day = database.get_term_of_day()
-    tags = database.get_all_tags()
+    term_of_day = get_term_of_day()
+    tags = get_all_tags()
     return render_template("home.html", term_of_day=term_of_day, tags=tags)
 
 
 @app_flask.route("/new-term-of-day", methods=["POST"])
 def new_term_of_day():
-    database.get_term_of_day(force_new=True)
+    get_term_of_day(force_new=True)
     return redirect(url_for("home"))
 
 
@@ -24,51 +29,51 @@ def search():
     query = request.args.get("q", "").strip()
     if not query:
         return redirect(url_for("home"))
-    results = database.search_terms(query)
+    results = search_terms(query)
     return render_template("search.html", query=query, results=results)
 
 
 @app_flask.route("/term/<int:term_id>")
 def term_view(term_id):
     try:
-        term = database.view_term(term_id)
+        term = view_term(term_id)
     except ValueError:
         flash("Term not found.", "error")
         return redirect(url_for("home"))
 
-    readings = core.fetch_readings(term["name"])
-    all_terms = database.get_all_terms()
+    readings = fetch_readings(term["name"])
+    all_terms = get_all_terms()
     return render_template("term.html", term=term, readings=readings, all_terms=all_terms)
 
 
 @app_flask.route("/browse")
 def browse():
-    tags = database.get_all_tags()
+    tags = get_all_tags()
     return render_template("browse.html", tags=tags)
 
 
 @app_flask.route("/browse/<path:tag>")
 def browse_tag(tag):
-    terms = database.get_terms_by_tag(tag)
+    terms = get_terms_by_tag(tag)
     return render_template("browse_tag.html", tag=tag, terms=terms)
 
 
 @app_flask.route("/study-list")
 def study_list():
-    sl = database.get_study_list()
+    sl = get_study_list()
     return render_template("study_list.html", study_list=sl)
 
 
 @app_flask.route("/concept-map")
 def concept_map():
-    all_terms = database.get_all_terms()
+    all_terms = get_all_terms()
     selected_term = request.args.get("term_id")
     connections = None
     term_name = None
 
     if selected_term:
         try:
-            term = database.view_term(int(selected_term))
+            term = view_term(int(selected_term))
             connections = term["connections"]
             term_name = term["name"]
         except (ValueError, TypeError):
@@ -79,7 +84,7 @@ def concept_map():
 
 @app_flask.route("/connections", methods=["GET", "POST"])
 def manage_connections():
-    all_terms = database.get_all_terms()
+    all_terms = get_all_terms()
 
     if request.method == "POST":
         term_a_id = request.form.get("term_a_id")
@@ -99,7 +104,7 @@ def manage_connections():
             return redirect(url_for("manage_connections"))
 
         try:
-            database.add_connection(int(term_a_id), int(term_b_id), explanation)
+            add_connection(int(term_a_id), int(term_b_id), explanation)
             flash("Connection created!", "success")
         except ValueError as e:
             flash(str(e), "error")
@@ -110,7 +115,7 @@ def manage_connections():
 
 
 @app_flask.route("/add-term", methods=["GET", "POST"])
-def add_term():
+def add_term_route():
     if request.method == "POST":
         name = request.form.get("name", "").strip()
         definition = request.form.get("definition", "").strip()
@@ -119,27 +124,27 @@ def add_term():
 
         if not name:
             flash("Term name cannot be empty.", "error")
-            return redirect(url_for("add_term"))
+            return redirect(url_for("add_term_route"))
         if not definition:
             flash("Definition cannot be empty.", "error")
-            return redirect(url_for("add_term"))
+            return redirect(url_for("add_term_route"))
 
         try:
-            new_id = database.add_term(name, definition, tags)
+            new_id = add_term(name, definition, tags)
             flash(f"Term '{name}' added successfully!", "success")
             return redirect(url_for("term_view", term_id=new_id))
         except ValueError as e:
             flash(str(e), "error")
-            return redirect(url_for("add_term"))
+            return redirect(url_for("add_term_route"))
 
     return render_template("add_term.html")
 
 
 @app_flask.route("/add-to-study-list/<int:term_id>", methods=["POST"])
-def add_to_study_list(term_id):
+def add_to_study_list_route(term_id):
     status = request.form.get("status", "want_to_learn")
     try:
-        database.add_to_study_list(term_id, status)
+        add_to_study_list(term_id, status)
         flash("Added to study list!", "success")
     except ValueError as e:
         flash(str(e), "error")
@@ -147,10 +152,10 @@ def add_to_study_list(term_id):
 
 
 @app_flask.route("/update-study-status/<int:term_id>", methods=["POST"])
-def update_study_status(term_id):
+def update_study_status_route(term_id):
     new_status = request.form.get("status", "want_to_learn")
     try:
-        database.update_study_status(term_id, new_status)
+        update_study_status(term_id, new_status)
         flash("Status updated!", "success")
     except ValueError as e:
         flash(str(e), "error")
@@ -158,9 +163,9 @@ def update_study_status(term_id):
 
 
 @app_flask.route("/delete-term/<int:term_id>", methods=["POST"])
-def delete_term(term_id):
+def delete_term_route(term_id):
     try:
-        database.delete_term(term_id)
+        delete_term(term_id)
         flash("Term deleted.", "success")
     except ValueError as e:
         flash(str(e), "error")
@@ -168,9 +173,9 @@ def delete_term(term_id):
 
 
 @app_flask.route("/edit-term/<int:term_id>", methods=["GET", "POST"])
-def edit_term(term_id):
+def edit_term_route(term_id):
     try:
-        term = database.view_term(term_id)
+        term = view_term(term_id)
     except ValueError:
         flash("Term not found.", "error")
         return redirect(url_for("home"))
@@ -182,16 +187,16 @@ def edit_term(term_id):
         tags = [t.strip() for t in tags_input.split(",") if t.strip()] if tags_input else []
 
         try:
-            database.edit_term(term_id, name=name, definition=definition, tags=tags)
+            edit_term(term_id, name=name, definition=definition, tags=tags)
             flash("Term updated!", "success")
             return redirect(url_for("term_view", term_id=term_id))
         except ValueError as e:
             flash(str(e), "error")
-            return redirect(url_for("edit_term", term_id=term_id))
+            return redirect(url_for("edit_term_route", term_id=term_id))
 
     return render_template("edit_term.html", term=term)
 
 
 if __name__ == "__main__":
-    database.init_database()
+    init_database()
     app_flask.run(debug=True, port=5000)
