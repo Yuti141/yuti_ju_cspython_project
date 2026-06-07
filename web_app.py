@@ -114,7 +114,7 @@ def manage_connections():
     return render_template("connections.html", all_terms=all_terms)
 
 
-@app_flask.route("/add-term", methods=["GET", "POST"])
+@app_flask.route("/add-term", methods=["GET", "POST"], endpoint="add_term")
 def add_term_route():
     if request.method == "POST":
         name = request.form.get("name", "").strip()
@@ -124,10 +124,10 @@ def add_term_route():
 
         if not name:
             flash("Term name cannot be empty.", "error")
-            return redirect(url_for("add_term_route"))
+            return redirect(url_for("add_term"))
         if not definition:
             flash("Definition cannot be empty.", "error")
-            return redirect(url_for("add_term_route"))
+            return redirect(url_for("add_term"))
 
         try:
             new_id = add_term(name, definition, tags)
@@ -135,12 +135,12 @@ def add_term_route():
             return redirect(url_for("term_view", term_id=new_id))
         except ValueError as e:
             flash(str(e), "error")
-            return redirect(url_for("add_term_route"))
+            return redirect(url_for("add_term"))
 
     return render_template("add_term.html")
 
 
-@app_flask.route("/add-to-study-list/<int:term_id>", methods=["POST"])
+@app_flask.route("/add-to-study-list/<int:term_id>", methods=["POST"], endpoint="add_to_study_list")
 def add_to_study_list_route(term_id):
     status = request.form.get("status", "want_to_learn")
     try:
@@ -151,7 +151,7 @@ def add_to_study_list_route(term_id):
     return redirect(url_for("term_view", term_id=term_id))
 
 
-@app_flask.route("/update-study-status/<int:term_id>", methods=["POST"])
+@app_flask.route("/update-study-status/<int:term_id>", methods=["POST"], endpoint="update_study_status")
 def update_study_status_route(term_id):
     new_status = request.form.get("status", "want_to_learn")
     try:
@@ -162,7 +162,7 @@ def update_study_status_route(term_id):
     return redirect(url_for("term_view", term_id=term_id))
 
 
-@app_flask.route("/delete-term/<int:term_id>", methods=["POST"])
+@app_flask.route("/delete-term/<int:term_id>", methods=["POST"], endpoint="delete_term")
 def delete_term_route(term_id):
     try:
         delete_term(term_id)
@@ -172,7 +172,7 @@ def delete_term_route(term_id):
     return redirect(url_for("home"))
 
 
-@app_flask.route("/edit-term/<int:term_id>", methods=["GET", "POST"])
+@app_flask.route("/edit-term/<int:term_id>", methods=["GET", "POST"], endpoint="edit_term")
 def edit_term_route(term_id):
     try:
         term = view_term(term_id)
@@ -192,7 +192,7 @@ def edit_term_route(term_id):
             return redirect(url_for("term_view", term_id=term_id))
         except ValueError as e:
             flash(str(e), "error")
-            return redirect(url_for("edit_term_route", term_id=term_id))
+            return redirect(url_for("edit_term", term_id=term_id))
 
     return render_template("edit_term.html", term=term)
 
