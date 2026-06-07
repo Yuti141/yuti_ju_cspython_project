@@ -3,7 +3,7 @@ from db.core import init_database
 from db.terms import search_terms, view_term, add_term, edit_term, delete_term
 from db.study_list import add_to_study_list, update_study_status, get_study_list
 from db.connections import add_connection
-from db.tags import get_all_tags, get_terms_by_tag
+from db.tags import get_all_tags, get_terms_by_tag, get_all_terms
 from db.term_of_day import get_term_of_day
 from services.readings import fetch_readings
 
